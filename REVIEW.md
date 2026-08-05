@@ -122,15 +122,17 @@ Reuse the shared JSON storage utility across both modules.
 
 ### What is wrong:
 
-Validation is performed in multiple layers: controller, validator and service, and some validation rules are redundant.
+Validation is performed in multiple layers: controller, validator and service, and some validation rules are redundant. The controller does its own manual `typeof`/trim/empty checks, and the service repeated similar checks (including a title-length rule the validator didn't know about at all).
 
 ### Why it is a problem:
 
-Duplicated validation increases maintainability costs.
+Duplicated validation increases maintainability costs, and a rule added or changed in one layer can stop applying in another. For example: for the "title-length" rule, `updateTask` enforces a 2-character minimum, but `createTask` doesn't, so a task could be created with a 1-character title and never shrunk to one using PATCH.
 
 ### How to improve it:
 
-Centralize request validation inside the validator utility and let the service focus on business logic and persistence.
+Centralize request validation inside the validator utility and let the service focus on business logic and persistence, trusting the caller with the validation of the input. Also, add the title-length rule in the validator utility. 
+
+**Note**: After improving, error messages will be more specific Previously a missing request body and a missing `title` field produced the same message, since the controller coerced `undefined` to `{}` before checking for a title. The validator now distinguishes "no body sent" from "body sent but incomplete.
 
 ---
 
