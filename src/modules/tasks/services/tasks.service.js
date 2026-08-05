@@ -56,6 +56,7 @@ async function createTask(payload) {
 }
 
 async function updateTask(taskId, updates) {
+  // TODO: add this validation to the util
   if (typeof updates.title === 'string' && updates.title.length < 2) {
     throw new HttpError(400, 'Title is too short.');
   }

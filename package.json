@@ -1,13 +1,24 @@
 {
-    "name": "backend-assessment",
-    "version": "1.0.0",
-    "description": "",
-    "main": "src/server.js",
-    "scripts": {
-        "start": "node src/server.js",
-        "dev": "node --watch src/server.js"
-    },
-    "dependencies": {
-        "express": "^4.19.2"
-    }
+  "name": "backend-assessment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "jest --runInBand"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "supertest": "^7.2.2"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.js",
+      "<rootDir>/tests/helpers/dataHelper.js"
+    ]
+  }
 }
