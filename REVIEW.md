@@ -174,15 +174,20 @@ Both modules expose similar REST APIs, but only the Tasks module consistently us
 - centralized validation
 - reusable error handling
 
-The Activity module uses a different implementation style.
+The Activity module uses a different implementation style, even its response shape. Tasks wraps every response in `{data: ...}`, while Activity returns raw arrays/objects directly.
 
 ### Why it is a problem:
 
-Similar modules should follow similar architecture patterns to make code easier to develop and maintain.
+Similar modules should follow similar architecture patterns to make code easier to develop and maintain. It also makes it easier for consumers of the API to not need to remember whichshape each endpoint returns, so for example, future modules like Reports can have one consistent convention to follow rather than two to choose from.
 
 ### How to improve it:
 
-Refactor the Activity module to align with the architectural style followed by the Tasks module.
+Refactor the Activity module to align with the architectural style followed by the Tasks module:
+
+- Use `jsonStore` utility for the async service methods
+- Centralize validation using `activityValidator.js`
+- Use consistent camelCase naming
+- Wrap responses in `{data: ...}` to match the Tasks API's contract
 
 ---
 
