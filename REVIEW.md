@@ -43,6 +43,25 @@ Create request validation like the one in the Tasks module before calling the se
 
 ---
 
+## 2. Malformed request errors can be reported as 500s
+
+**Location**
+- `src\middleware\errorHandler.js`
+
+### What is wrong:
+
+The error handler only checks `error.statusCode` when deciding the HTTP response status. Some request errors use `error.status` instead, and if those errors are not mapped correctly, a bad client request can be returned as a 500 Internal Server Error instead of a 400-level response.
+
+### Why it is a problem:
+
+This makes client-side input problems look like server failures, which can be misleading and can hide real API behavior.
+
+### How to improve it:
+
+Update the error handler to recognize both `error.statusCode` and `error.status`, and return the correct 4xx status for malformed request bodies.
+
+---
+
 # Performance
 
 ## 1. Synchronous file operations block the event loop

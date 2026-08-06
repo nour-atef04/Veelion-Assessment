@@ -1,12 +1,17 @@
-const HttpError = require('../utils/httpError');
+const HttpError = require("../utils/httpError");
 
 function errorHandler(error, req, res, next) {
   if (res.headersSent) {
     return next(error);
   }
 
-  const statusCode = Number.isInteger(error.statusCode) ? error.statusCode : 500;
-  const message = statusCode === 500 ? 'Internal server error' : error.message;
+  const statusCode = Number.isInteger(error.statusCode)
+    ? error.statusCode
+    : Number.isInteger(error.status)
+      ? error.status
+      : 500;
+
+  const message = statusCode >= 500 ? "Internal server error" : error.message;
 
   const response = {
     error: {
