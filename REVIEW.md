@@ -2,9 +2,9 @@
 
 ## Overview
 
-This code is an Express.js backend for a **task management system**. It has a good seperation between routes, controllers, services and middlewares. It is also organized into two main modules: 
+This code is an Express.js backend for a **task management system**. It has a good seperation between routes, controllers, services and middlewares. It is also organized into two main modules:
 
-- Tasks API 
+- Tasks API
 - Activity API
 
 Overall, the **Tasks module** follows a cleaner architecture, while the **Activity module** is less consistent and requires more refactoring.
@@ -77,14 +77,14 @@ The code contains two identical functions: `loadDataA` and `loadDataB`, which's 
 
 ### Why it is a problem:
 
-Redundancy might increase code maintenance costs, because if the loading logic ever changes, we'll have to update both functions, which might increase the risk of inconsistency. 
+Redundancy might increase code maintenance costs, because if the loading logic ever changes, we'll have to update both functions, which might increase the risk of inconsistency.
 
 ### How to improve it:
 
 - Replace the two functions with a single reusable loader
 
 OR
- 
+
 - Reuse the shared JSON storage utility used already by the Tasks module.
 
 ---
@@ -122,17 +122,17 @@ Reuse the shared JSON storage utility across both modules.
 
 ### What is wrong:
 
-Validation is performed in multiple layers: controller, validator and service, and some validation rules are redundant. The controller does its own manual `typeof`/trim/empty checks, and the service repeated similar checks (including a title-length rule the validator didn't know about at all).
+Validation is performed in multiple layers: controller, validator and service, and some validation rules are redundant. The controller does its own `typeof`/trim/empty checks manually and the service repeated similar checks (including a title-length rule the validator didn't even know about at all).
 
 ### Why it is a problem:
 
-Duplicated validation increases maintainability costs, and a rule added or changed in one layer can stop applying in another. For example: for the "title-length" rule, `updateTask` enforces a 2-character minimum, but `createTask` doesn't, so a task could be created with a 1-character title and never shrunk to one using PATCH.
+Duplicated validation increases maintainability costs, and a rule added or changed in one layer can stop applying in another. For example: for the "title-length" rule, `updateTask` enforces a 2-character minimum, but `createTask` doesn't, so a task could be created with a 1-character title but never edited to one using PATCH.
 
 ### How to improve it:
 
-Centralize request validation inside the validator utility and let the service focus on business logic and persistence, trusting the caller with the validation of the input. Also, add the title-length rule in the validator utility. 
+Centralize request validation inside the validator utility and let the service focus on business logic and persistence, trusting the caller with the validation of the input. Also, add the title-length rule in the validator utility.
 
-**Note**: After improving, error messages will be more specific Previously a missing request body and a missing `title` field produced the same message, since the controller coerced `undefined` to `{}` before checking for a title. The validator now distinguishes "no body sent" from "body sent but incomplete.
+**Note**: After improving, error messages will be more specific Previously a missing request body and a missing `title` field produced the same message, since the controller coerced `undefined` to `{}` before checking for a title. The validator now distinguishes "no body sent" from "body sent but incomplete".
 
 ---
 
@@ -151,7 +151,7 @@ Several identifiers use inconsistent naming conventions, including:
 - `aSvc`
 - `made`
 
-These are inconsistent and also differ from the naming style used throughout the Tasks module.
+These are inconsistent and also differ from the naming style used in the Tasks module.
 
 ### Why it is a problem:
 
@@ -159,7 +159,7 @@ Consistent naming improves readability.
 
 ### How to improve it:
 
-Use camelCase names consistently throughout the project.
+Consistently use camelCase names throughout the project.
 
 ---
 
@@ -240,3 +240,40 @@ Without automated tests, future refactoring becomes riskier and regressions are 
 ### How to improve it:
 
 Add integration tests for the API using Jest and Supertest to cover successful requests, validation failures, and error handling.
+
+---
+
+---
+
+# New Module: Reports API
+
+## `GET /reports/tasks-summary`
+
+A new module will be added under `src/modules/reports/...`, with the same route -> controller -> service structure as the Tasks module. It will also be reading from `data/tasks.json` and `data/activity.json` using the shared `jsonStore` utility.
+
+Two design decisions were required:
+
+### Task status mapping
+
+The task data model only contains `completed: boolean`, rather than a multi-state `status` field, but the response example in README.md expects `byStatus: { todo, in-progress, done }`.
+
+Instead of adding a `status` field to the Tasks schema, `byStatus` will be derived from `completed`:
+
+- `completed: false` will be counted as `"todo"`
+- `completed: true` will be counted as `"done"`
+- `"in-progress"` will always be `0`, since the current model has no way to represent that state.
+
+This was chosen instead of creating a second field to represent state (`completed` and `status`) so we don't risk maintainability costs and because that will require changing the Tasks API's data contract just to support a new read-only Reports endpoint.
+
+### "Recent" activity window
+
+Nothing in the README.md defined what "recent" meant for `recentActivityCount`. A 24-hour window from the request time was chosen and will be implemented as a constant (`RECENT_ACTIVITY_WINDOW_MS` in `reports.service.js`).
+
+### Response shape
+
+`GET /reports/tasks-summary` returns an unwrapped object (`{ total, byStatus, recentActivityCount }`), rather than the `{ data: ... }` wrapper used by Tasks and Activity. This was decided because matching the response shape given in the README.md was higher in priority over matching the other two modules' internal convention.
+
+### Other notes
+
+- Activity entries with a malformed or unparseable `when` timestamp will be excluded from `recentActivityCount` rather than causing an error, since a single corrupted record shouldn't cause an error for the whole summary.
+- Task and activity files are read concurrently (`Promise.all`) since the two reads are independent.

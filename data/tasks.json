@@ -1,93 +1,23 @@
 [
   {
-    "id": "aeccf602-2809-4802-985b-70ff86942377",
-    "title": "Test task",
+    "id": "64f722a6-33c0-4548-9304-34dda8b6d6c9",
+    "title": "Todo one",
+    "completed": false,
+    "createdAt": "2026-08-06T13:36:32.575Z",
+    "updatedAt": "2026-08-06T13:36:32.575Z"
+  },
+  {
+    "id": "ad7183ce-dbc3-4b7a-b80e-939d99d169a7",
+    "title": "Todo two",
+    "completed": false,
+    "createdAt": "2026-08-06T13:36:32.601Z",
+    "updatedAt": "2026-08-06T13:36:32.601Z"
+  },
+  {
+    "id": "1f059432-608e-48b8-aed5-052a3faa3868",
+    "title": "Done one",
     "completed": true,
-    "createdAt": "2026-04-08T09:39:57.432Z",
-    "updatedAt": "2026-04-08T09:39:57.579Z"
-  },
-  {
-    "id": "9a749a2d-ec52-415e-b68d-3c16a6ed024d",
-    "title": "degraded task",
-    "completed": true,
-    "createdAt": "2026-04-08T09:49:54.480Z",
-    "updatedAt": "2026-04-08T09:49:54.497Z"
-  },
-  {
-    "id": "4398f26b-f527-4eeb-b74c-cd4c0ecc9060",
-    "title": "A new task",
-    "completed": false,
-    "createdAt": "2026-04-08T10:11:56.354Z",
-    "updatedAt": "2026-04-08T10:11:56.354Z"
-  },
-  {
-    "id": "b8332656-85c6-48d2-aa95-a9c2e44ef5d5",
-    "title": "Write POST tests",
-    "completed": false,
-    "createdAt": "2026-08-05T21:00:46.788Z",
-    "updatedAt": "2026-08-05T21:00:46.788Z"
-  },
-  {
-    "id": "3cae5046-b38e-4d20-be54-bf93d82bccd5",
-    "title": "No completed field",
-    "completed": false,
-    "createdAt": "2026-08-05T21:00:46.797Z",
-    "updatedAt": "2026-08-05T21:00:46.797Z"
-  },
-  {
-    "id": "10afc24a-d3b6-427b-9593-70e5cb7db901",
-    "title": "Updated title",
-    "completed": false,
-    "createdAt": "2026-08-05T21:00:46.845Z",
-    "updatedAt": "2026-08-05T21:00:46.851Z"
-  },
-  {
-    "id": "68bcbc85-443d-4e3b-8ed2-317a41b5dc85",
-    "title": "Toggle me",
-    "completed": true,
-    "createdAt": "2026-08-05T21:00:46.859Z",
-    "updatedAt": "2026-08-05T21:00:46.866Z"
-  },
-  {
-    "id": "c8ad6dfb-41a1-487f-beb8-f53c9505c6f8",
-    "title": "After",
-    "completed": true,
-    "createdAt": "2026-08-05T21:00:46.872Z",
-    "updatedAt": "2026-08-05T21:00:46.879Z"
-  },
-  {
-    "id": "655e182c-af8b-4b5c-87e0-62cf15410d5c",
-    "title": "Task",
-    "completed": false,
-    "createdAt": "2026-08-05T21:00:46.890Z",
-    "updatedAt": "2026-08-05T21:00:46.890Z"
-  },
-  {
-    "id": "ec402441-5313-4919-9c40-a8ea424ea281",
-    "title": "Task",
-    "completed": false,
-    "createdAt": "2026-08-05T21:00:46.903Z",
-    "updatedAt": "2026-08-05T21:00:46.903Z"
-  },
-  {
-    "id": "61323547-485c-48f3-b9d9-0e0c7d1bb9f3",
-    "title": "Task",
-    "completed": false,
-    "createdAt": "2026-08-05T21:00:46.914Z",
-    "updatedAt": "2026-08-05T21:00:46.914Z"
-  },
-  {
-    "id": "2d6ff84d-49f2-4373-b8d1-01183835842d",
-    "title": "Task",
-    "completed": false,
-    "createdAt": "2026-08-05T21:00:46.922Z",
-    "updatedAt": "2026-08-05T21:00:46.922Z"
-  },
-  {
-    "id": "528208c8-4f2b-4bd0-b2a7-e1e80e541d7f",
-    "title": "Task",
-    "completed": false,
-    "createdAt": "2026-08-05T21:00:46.935Z",
-    "updatedAt": "2026-08-05T21:00:46.935Z"
+    "createdAt": "2026-08-06T13:36:32.619Z",
+    "updatedAt": "2026-08-06T13:36:32.619Z"
   }
 ]
