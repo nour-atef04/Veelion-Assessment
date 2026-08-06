@@ -1,14 +1,20 @@
 [
   {
-    "id": "1786023392679",
+    "id": "1786025231209",
     "action": "test-run",
     "info": "fresh entry",
-    "when": "2026-08-06T13:36:32.680Z"
+    "when": "2026-08-06T14:07:11.209Z"
   },
   {
-    "id": "1786023392697",
+    "id": "1786025231215",
     "action": "test-run",
     "info": "another fresh entry",
-    "when": "2026-08-06T13:36:32.697Z"
+    "when": "2026-08-06T14:07:11.215Z"
+  },
+  {
+    "id": "1786025231383",
+    "action": "test-run",
+    "info": "created via supertest",
+    "when": "2026-08-06T14:07:11.383Z"
   }
 ]

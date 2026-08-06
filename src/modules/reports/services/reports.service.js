@@ -5,7 +5,7 @@ const { readJsonArray } = require("../../../utils/jsonStore");
 const TASKS_FILE_PATH = path.join(process.cwd(), "data", "tasks.json");
 const ACTIVITY_FILE_PATH = path.join(process.cwd(), "data", "activity.json");
 
-// task data model only has 'completed', not a 'status' field, so 'in-progress' has no way to be represented and will always be 0, unless this design change was decided by the team
+// Task data model only has 'completed', not a 'status' field, so 'in-progress' has no way to be represented and will always be 0. It'll be kept this way because assessment response shape requires it.
 function buildByStatus(tasks) {
   const byStatus = {
     todo: 0,
@@ -23,7 +23,7 @@ function buildByStatus(tasks) {
   return byStatus;
 }
 
-// chose "recent" to mean a 24-hour window from the request time
+// Chose "recent" to mean a 24-hour window from the request time
 const RECENT_ACIVITY_WINDOW = 24 * 60 * 60 * 1000; // in ms
 
 function countRecentActivity(activities, now) {

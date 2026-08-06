@@ -116,7 +116,7 @@ Reuse the shared JSON storage utility across both modules.
 
 **Location**
 
-- `src\modules\tasks\services\tasks.controller.js`
+- `src\modules\tasks\controllers\tasks.controller.js`
 - `src\modules\tasks\services\tasks.service.js`
 - `src\modules\tasks\utils\taskValidator.js`
 
@@ -188,6 +188,35 @@ Refactor the Activity module to align with the architectural style followed by t
 - Centralize validation using `activityValidator.js`
 - Use consistent camelCase naming
 - Wrap responses in `{data: ...}` to match the Tasks API's contract
+
+---
+
+## 4. Inconsistent strategy for ID generation
+
+**Location**
+
+- `src/modules/activity/services/activity.service.js`
+- `src/utils/id.js`
+
+### What is wrong:
+
+The Activity module generates IDs using:
+
+```js
+id: String(Date.now());
+```
+
+But the Tasks module uses the shared `createId()` utility, which generates UUIDs.
+
+### Why it is a problem:
+
+Using two different ID generation strategies can make the code inconsistent. Also, `Date.now()` can cause the possibility of generating duplicate IDs if mulitple activity records are created within the same exact millisecond, but `createId()` is designed to avoid collisions.
+
+### How to improve it:
+
+Reuse the shared `createId()` utility in the Activity module so both modules follow the same ID generation strategy.
+
+**Note**: I intentionally will not change this during the refactor because it changes the format of activity IDs that will be generated in the future (timestamp strings → UUIDs). It is a visible behavioral change and it's better to be introduced as a design decision rather than during refactoring.
 
 ---
 
