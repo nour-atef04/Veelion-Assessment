@@ -8,7 +8,7 @@ const HttpError = require("./utils/httpError");
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json({ limit: "1mb" }));
 
 app.use("/tasks", tasksRouter);
 app.use("/activity", activityRouter);
